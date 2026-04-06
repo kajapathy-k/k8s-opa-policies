@@ -4,6 +4,8 @@ metadata:
   name: block-latest
 spec:
   match:
-    kinds:
-      - apiGroups: [""]
-        kinds: ["Pod"]
+  kinds:
+  - apiGroups: [""]
+    kinds: ["Pod"]
+  - apiGroups: ["apps"]
+    kinds: ["Deployment"]

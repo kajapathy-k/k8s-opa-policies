@@ -1,0 +1,26 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sallowedregistry
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sAllowedRegistry
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sallowedregistry
+
+        violation[{"msg": msg}] {
+          container := get_containers(input.review.object)[_]
+          not startswith(container.image, "nginx")
+          not startswith(container.image, "mycompany/")
+          msg := sprintf("Image '%v' is not from an allowed registry", [container.image])
+        }
+
+        get_containers(obj) = containers {
+          containers := obj.spec.containers
+        } else = containers {
+          containers := obj.spec.template.spec.containers
+        }

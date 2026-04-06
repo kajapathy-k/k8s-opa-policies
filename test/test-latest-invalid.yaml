@@ -1,8 +1,17 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: test-latest
+  name: deploy-invalid
 spec:
-  containers:
-  - name: nginx
-    image: nginx:latest
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest

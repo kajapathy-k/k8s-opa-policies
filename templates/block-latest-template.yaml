@@ -13,7 +13,13 @@ spec:
         package k8sblocklatest
 
         violation[{"msg": msg}] {
-          container := input.review.object.spec.containers[_]
+          container := get_containers(input.review.object)[_]
           endswith(container.image, ":latest")
           msg := "Using latest image is not allowed"
+        }
+
+        get_containers(obj) = containers {
+          containers := obj.spec.containers
+        } else = containers {
+          containers := obj.spec.template.spec.containers
         }

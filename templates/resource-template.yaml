@@ -13,13 +13,19 @@ spec:
         package k8sresourcelimits
 
         violation[{"msg": msg}] {
-          container := input.review.object.spec.containers[_]
+          container := get_containers(input.review.object)[_]
           not container.resources.limits
           msg := "Resource limits must be defined"
         }
 
         violation[{"msg": msg}] {
-          container := input.review.object.spec.containers[_]
+          container := get_containers(input.review.object)[_]
           not container.resources.requests
           msg := "Resource requests must be defined"
+        }
+
+        get_containers(obj) = containers {
+          containers := obj.spec.containers
+        } else = containers {
+          containers := obj.spec.template.spec.containers
         }

@@ -4,8 +4,8 @@ metadata:
   name: require-resources
 spec:
   match:
-  kinds:
-  - apiGroups: [""]
-    kinds: ["Pod"]
-  - apiGroups: ["apps"]
-    kinds: ["Deployment"]
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Pod"]
+    - apiGroups: ["apps"]
+      kinds: ["Deployment"]

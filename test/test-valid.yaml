@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploy-valid
+  labels:
+    team: devops
+    env: prod
 spec:
   replicas: 1
   selector:
@@ -11,6 +14,8 @@ spec:
     metadata:
       labels:
         app: demo
+        team: devops
+        env: prod
     spec:
       containers:
       - name: nginx
